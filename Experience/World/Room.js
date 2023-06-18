@@ -2,6 +2,7 @@ import Experience from "../Experience.js";
 import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js';
 import * as THREE from "three";
 import GSAP from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default class Room {
     constructor() {
@@ -21,10 +22,43 @@ export default class Room {
             ease: 0.1,
         };
         
+        this.setScrollTrigger();
         this.setModel();
         this.onMouseMove();
     }
     
+    setScrollTrigger() {
+        GSAP.registerPlugin(ScrollTrigger);
+        const switchMonitor = (str) => {
+            console.log(str);
+            this.actualRoom.children.forEach(child => {if (child.name === "Computer") {
+                child.children[1].material = new THREE.MeshBasicMaterial({
+                    map: this.resources.items[str],
+                });
+            }})
+        };
+        ScrollTrigger.create({
+            trigger: ".bpi",
+            start: "top center",
+            onEnter: () => switchMonitor("bpi"),
+            onEnterBack: () => switchMonitor("bpi"),
+        });
+        ScrollTrigger.create({
+            trigger: ".courseSearch",
+            start: "top center",
+            onEnter: () => switchMonitor("courseSearch"),
+            onEnterBack: () => switchMonitor("courseSearch"),
+
+        });
+
+        ScrollTrigger.create({
+            trigger: ".artGuessr",
+            start: "top center",
+            onEnter: () => switchMonitor("artGuessr"),
+            onEnterBack: () => switchMonitor("artGuessr"),
+        });
+    }
+
     setModel() {
         
         this.actualRoom.children.forEach(child => {

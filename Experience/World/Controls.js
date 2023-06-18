@@ -43,8 +43,7 @@ export default class Controls {
             },
             getBoundingClientRect() {
                 return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-            },
-        fixedMarkers: true });
+            }});
     
     
         asscroll.on("update", ScrollTrigger.update);
@@ -99,16 +98,16 @@ export default class Controls {
             })
             .to(this.room.position, {
                 x: () => {
-                    return -0.5;
+                    return 2.4;
                 },
                 z: () => {
-                    return this.sizes.height * 0.0032;
+                    return this.sizes.height * 0.0064;
                 }
             }, "same")
             .to(this.room.scale, {
-                x: 0.8,
-                y: 0.8,
-                z: 0.8,
+                x: 1.5,
+                y: 1.5,
+                z: 1.5,
             }, "same")
             .to(this.rectLight, {
                 width: 0.3 * 8,
@@ -126,7 +125,19 @@ export default class Controls {
             }).to(this.camera.orthographicCamera.position, {
                 y: 1,
                 x: -3.5,
-            });
+            }, "same")
+            .to(this.room.position, {
+                x: () => {
+                    return -0.5;
+                },
+                z: () => {
+                    return this.sizes.height * 0.0032;
+                }
+            }, "same").to(this.room.scale, {
+                x: 0.8,
+                y: 0.8,
+                z: 0.8,
+            }, "same");
         });
 
         mm.add("(max-width: 799px)", () => {
